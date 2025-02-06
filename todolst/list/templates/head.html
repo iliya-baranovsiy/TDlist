@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ввод текста</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/my.css' %}">
+</head>
+<body>
+    <h1>Todo List</h1>
+    <form id="textForm" method="POST" action="{% url 'head_page' %}">
+        {% csrf_token %}
+        <label for="text_input">Что делаем сегодня ?</label>
+        <input type="text" id="text_input" name="text_input" required>
+        <button type="submit">Записать</button>
+    </form>
+    <script type="module" src="{% static 'js/inp_task.js' %}"></script>
+</body>
+</html>
