@@ -4,7 +4,7 @@ const form = document.getElementById("textForm");
 form.addEventListener("submit", logText);
 
 function clearForm() {
-    document.getElementById("textForm").reset(); // Очищаем форму
+    document.getElementById("textForm").reset();
 }
 
 function logText(event) {

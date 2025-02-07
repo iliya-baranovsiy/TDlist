@@ -14,37 +14,43 @@
     <h1>Todo List</h1>
     <form id="textForm" method="POST" action="{% url 'head_page' %}">
         {% csrf_token %}
-        <label for="text_input">Что делаем сегодня ?</label>
+        <label for="text_input">Что делаем сегодня?</label>
         <input type="text" id="text_input" name="text_input" required>
         <button type="submit">Записать</button>
     </form>
-<script type="module" src="{% static 'js/inp_task.js' %}"></script>
 
     <div class="container">
-    {% for todo in todos %}
-    <div class="todo-item">
-        <p>{{ todo.title }}</p>
-            <button
-                id="doneBtn-{{ todo.id }}"
-                class="done-button"
-                {% if todo.done %}disabled{% endif %}>
+        {% for todo in todos %}
+        <div class="todo-item">
+            <p>{{ todo.title }}</p>
+            <button id="doneBtn-{{ todo.id }}" class="done-button" {% if todo.done %}disabled{% endif %}>
                 {% if todo.done %}Выполнено{% else %}Done{% endif %}
             </button>
-        {% if todo.done %}
-            <button class="del0-button" id="del0button-{{ todo.id }}">
-            Delete
-        </button>
-        {% else %}
-        <button class="del-button" id="delbutton-{{ todo.id }}">
-            Delete
-        </button>
-        {% endif %}
 
+            {% if todo.done %}
+            <button class="del0-button" id="del0button-{{ todo.id }}">Delete</button>
+            {% else %}
+            <button class="del-button" id="delbutton-{{ todo.id }}">Delete</button>
+            {% endif %}
+
+            {% if not todo.done %}
+            <button class="change-button" id="changebutton-{{ todo.id }}" data-todo-id="{{ todo.id }}">Change</button>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="popup-overlay" id="popup-overlay" style="display: none;"></div>
+    <div class="popup" id="popup" style="display: none;">
+        <button class="close-popup">Закрыть</button>
+        <h2>Изменить задачу</h2>
+        <form id="changeForm">
+            <input type="text" id="changeInput" name="changeInput" required placeholder="Введите новое значение">
+            <button type="submit">Применить</button>
         </form>
     </div>
-    {% endfor %}
-    </div>
 
+    <script type="module" src="{% static 'js/inp_task.js' %}"></script>
     <script type="module">
         import { markAsDone } from '{% static "js/done.js" %}';
         document.querySelectorAll('[id^="doneBtn-"]').forEach(button => {
@@ -52,7 +58,6 @@
             button.addEventListener('click', () => markAsDone(id));
         });
     </script>
-
     <script type="module">
         import { del } from '{% static "js/del_req.js" %}';
         document.querySelectorAll('[id^="delbutton-"]').forEach(button => {
@@ -60,7 +65,6 @@
             button.addEventListener('click', () => del(id));
         });
     </script>
-
     <script type="module">
         import { del } from '{% static "js/del_req.js" %}';
         document.querySelectorAll('[id^="del0button-"]').forEach(button => {
@@ -69,5 +73,6 @@
         });
     </script>
 
+    <script type="module" src="{% static 'js/popup.js' %}"></script>
 </body>
 </html>
