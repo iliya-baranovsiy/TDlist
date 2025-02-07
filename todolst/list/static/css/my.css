@@ -53,3 +53,55 @@ button {
 button:hover {
     background-color: #4cae4c;
 }
+
+.container {
+    padding-top: 280px;
+    margin-left: 50px;
+}
+
+.todo-item {
+    font-weight: bold;
+    border: 2px solid #007BFF;
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    width: 500px;
+}
+
+
+button:disabled {
+    background-color: #ccc; /* Серый цвет для отключенной кнопки */
+    cursor: not-allowed; /* Указатель "нельзя" */
+
+}
+
+.del0-button {
+    background-color: #f33; /* Цвет фона кнопки Test */
+    color: white;
+    border: none;
+    padding: 10px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 300px
+}
+
+.del0-button:hover {
+    background-color: #f03;
+}
+
+.del-button {
+    background-color: #f33; /* Цвет фона кнопки Test */
+    color: white;
+    border: none;
+    padding: 10px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 346px
+}
+
+.del-button:hover {
+    background-color: #f03;
+}

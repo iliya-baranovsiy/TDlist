@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ввод текста</title>
     <link rel="stylesheet" type="text/css" href="{% static 'css/my.css' %}">
 </head>
+
 <body>
+
     <h1>Todo List</h1>
     <form id="textForm" method="POST" action="{% url 'head_page' %}">
         {% csrf_token %}
@@ -15,6 +18,56 @@
         <input type="text" id="text_input" name="text_input" required>
         <button type="submit">Записать</button>
     </form>
-    <script type="module" src="{% static 'js/inp_task.js' %}"></script>
+<script type="module" src="{% static 'js/inp_task.js' %}"></script>
+
+    <div class="container">
+    {% for todo in todos %}
+    <div class="todo-item">
+        <p>{{ todo.title }}</p>
+            <button
+                id="doneBtn-{{ todo.id }}"
+                class="done-button"
+                {% if todo.done %}disabled{% endif %}>
+                {% if todo.done %}Выполнено{% else %}Done{% endif %}
+            </button>
+        {% if todo.done %}
+            <button class="del0-button" id="del0button-{{ todo.id }}">
+            Delete
+        </button>
+        {% else %}
+        <button class="del-button" id="delbutton-{{ todo.id }}">
+            Delete
+        </button>
+        {% endif %}
+
+        </form>
+    </div>
+    {% endfor %}
+    </div>
+
+    <script type="module">
+        import { markAsDone } from '{% static "js/done.js" %}';
+        document.querySelectorAll('[id^="doneBtn-"]').forEach(button => {
+            const id = button.id.split('-')[1];
+            button.addEventListener('click', () => markAsDone(id));
+        });
+    </script>
+
+    <script type="module">
+        import { del } from '{% static "js/del_req.js" %}';
+        document.querySelectorAll('[id^="delbutton-"]').forEach(button => {
+            const id = button.id.split('-')[1];
+            button.addEventListener('click', () => del(id));
+        });
+    </script>
+
+    <script type="module">
+        import { del } from '{% static "js/del_req.js" %}';
+        document.querySelectorAll('[id^="del0button-"]').forEach(button => {
+            const id = button.id.split('-')[1];
+            button.addEventListener('click', () => del(id));
+        });
+    </script>
+
 </body>
 </html>
